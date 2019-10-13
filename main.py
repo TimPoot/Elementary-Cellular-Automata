@@ -1,4 +1,5 @@
 import random
+from AutomataDrawer import AutomataDrawer
 
 class ElementaryCellularAutomata:
 
@@ -72,5 +73,7 @@ class ElementaryCellularAutomata:
         print("Decimal rule: " + str(self.decimalRule))
         print("dictionaryRule: " + str(self.dictionaryRule))
 
-automata = ElementaryCellularAutomata(25, 110)
-automata.run(50)
+#automata = ElementaryCellularAutomata(25, 110)
+#automata.run(50)
+
+drawer = AutomataDrawer(25, 50)
