@@ -30,7 +30,7 @@ class ElementaryCellularAutomata:
         #prepend 0s for full dictionary
         while len(binaryRule) < 8:
             binaryRule = "0" + binaryRule
-        #build dictionary
+        #build dictionary by tierating over bitstring and assigning each character to corresponding 3bit key
         for c in binaryRule:
             self.dictionaryRule[self.toBinaryString(dictionaryKey)] = c
             dictionaryKey -= 1
@@ -38,22 +38,23 @@ class ElementaryCellularAutomata:
     def getNeighbourhood(self, i):
         left = self.strip[i - 1]
         center = self.strip[i]
-        right = self.strip[i + 1]
+        right = self.strip[(i + 1) % self.length]
         neighbourhood = 100 * left + 10 * center + right
         return str(neighbourhood)
 
     def updateStrip(self):
-        bufferstrip = self.strip
+        bufferstrip = list(self.strip)
         for i in range(0, self.length):
-            bufferstrip[i] = dictionaryRule[getNeighbourhood(i)]
+            bufferstrip[i] = int(self.dictionaryRule[self.getNeighbourhood(i)])
         self.strip = bufferstrip          
 
     def toBinaryString(self, x):
         return str(bin(x).replace("0b", ""))
 
+    #updates the automata n times
     def run(self, n):
         self.printStrip()
-        for i in range(0, n)
+        for i in range(0, n):
             self.updateStrip()
             self.printStrip()
     
@@ -71,5 +72,5 @@ class ElementaryCellularAutomata:
         print("Decimal rule: " + str(self.decimalRule))
         print("dictionaryRule: " + str(self.dictionaryRule))
 
-automata = ElementaryCellularAutomata(10, 3)
-automata.testPrint()
+automata = ElementaryCellularAutomata(25, 110)
+automata.run(50)
