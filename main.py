@@ -52,20 +52,20 @@ class ElementaryCellularAutomata:
     def toBinaryString(self, x):
         return str(bin(x).replace("0b", ""))
 
-    #updates the automata n times
-    def run(self, n):
-        self.printStrip()
-        for i in range(0, n):
-            self.updateStrip()
-            self.printStrip()
-    
-    def printStrip(self):
-        for i in range(0, self.length):
-            if self.strip[i]:
-                print('X', end='', flush=True)
-            else:
-                print('_', end='', flush=True)
-        print()
+    #runs the automata n times, if exportImage=True than as .png file otherwise to commandline
+    def run(self, n, exportImage):
+    	drawer = AutomataDrawer(self.length, n)
+    	if exportImage:
+    		drawer.drawLine(self.strip, 0)
+    		for i in range(1, n):
+    			self.updateStrip()
+    			drawer.drawLine(self.strip, i)
+    		drawer.saveImage(str(self.decimalRule))
+    	else:
+	        drawer.printStrip()
+	        for i in range(1, n):
+	            self.updateStrip()
+	            drawer.printStrip()
 
     #used for debugging
     def testPrint(self):
@@ -73,7 +73,5 @@ class ElementaryCellularAutomata:
         print("Decimal rule: " + str(self.decimalRule))
         print("dictionaryRule: " + str(self.dictionaryRule))
 
-#automata = ElementaryCellularAutomata(25, 110)
-#automata.run(50)
-
-drawer = AutomataDrawer(25, 50)
+automata = ElementaryCellularAutomata(33, 110)
+automata.run(33, True)
